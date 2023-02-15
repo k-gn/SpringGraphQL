@@ -5,19 +5,21 @@ spring:
 
   graphql:
     graphiql:
-      # graphiql? true? ??? ?? localhost:8080/h2-console? ?? localhost:8080/graphiql ??
-      # graphql ??? ???? ?????.
-      # ? ?? ??? IntelliJ? GraphQL ????? ???? IntelliJ?? ?? ???? ???? Postman??? ?????.
+      # graphiql을 true를 설정해 주면 localhost:8080/h2-console과 같이 localhost:8080/graphql 통해
+      # graphql 쿼리 테스트가 가능합니다.
+      # IntelliJ에 GraphQL 플러그인을 설치해서 IntelliJ에서 직접 테스트도 가능하며 Postman으로도 가능합니다.
       enabled: true
+      path: /graphiql
+    path: /graphql
+    schema:
       printer:
-        # jpa show ?? graphql ??? ?????.
         enabled: true
 
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:~/test
     username: sa
-    password: 1234
+    password:
 
   jpa:
     show-sql: true

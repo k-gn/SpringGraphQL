@@ -19,6 +19,7 @@ public class FoodService {
 
 	private final FoodRepository foodRepository;
 
+	@Transactional
 	public Food save(String name) {
 		return foodRepository.save(Food.from(name));
 	}
