@@ -29,8 +29,8 @@ public class FoodController {
 	 *  graphql은 endpoint과 하나이므로 @MutationMapping 어노테이션만 지정해 주고 다른 설정은 필요 없습니다.
 	 */
 	@MutationMapping
-	public FoodPayload save(@Argument("input") @Valid FoodInput input) {
-		return foodService.save(input);
+	public FoodPayload save(@Argument("req") @Valid FoodInput req) {
+		return foodService.save(req);
 	}
 
 	/**
@@ -38,8 +38,8 @@ public class FoodController {
 	 * 말고도 @SubscriptionMapping이 있습니다.
 	 */
 	@QueryMapping
-	public FoodPayload getFood(@Argument FoodInput input) {
-		return foodService.getFood(input);
+	public FoodPayload getFood(@Argument FoodInput req) {
+		return foodService.getFood(req);
 	}
 
 	@QueryMapping

@@ -23,12 +23,13 @@ public class FoodService {
 	private final FoodRepository foodRepository;
 
 	@Transactional
-	public FoodPayload save(FoodInput input) {
-		return new FoodPayload(foodRepository.save(Food.from(input.getName())));
+	public FoodPayload save(FoodInput req) {
+		return new FoodPayload(foodRepository.save(Food.from(req.getName())));
 	}
 
-	public FoodPayload getFood(FoodInput input) {
-		return new FoodPayload(foodRepository.findByName(input.getName()).orElseThrow(EntityNotFoundException::new));
+	public FoodPayload getFood(FoodInput req) {
+		return new FoodPayload(foodRepository.findByName(req.getName())
+			.orElseThrow(EntityNotFoundException::new));
 	}
 
 	public List<FoodPayload> getFoods() {
