@@ -1,12 +1,15 @@
 package com.example.start_graphql.api.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.start_graphql.api.controller.dto.FoodInput;
+import com.example.start_graphql.api.controller.dto.FoodPayload;
 import com.example.start_graphql.api.domain.Food;
 import com.example.start_graphql.api.domain.FoodRepository;
 
@@ -20,15 +23,17 @@ public class FoodService {
 	private final FoodRepository foodRepository;
 
 	@Transactional
-	public Food save(String name) {
-		return foodRepository.save(Food.from(name));
+	public FoodPayload save(FoodInput input) {
+		return new FoodPayload(foodRepository.save(Food.from(input.getName())));
 	}
 
-	public Food getFood(String name) {
-		return foodRepository.findByName(name).orElseThrow(EntityNotFoundException::new);
+	public FoodPayload getFood(FoodInput input) {
+		return new FoodPayload(foodRepository.findByName(input.getName()).orElseThrow(EntityNotFoundException::new));
 	}
 
-	public List<Food> getFoods() {
-		return foodRepository.findAll();
+	public List<FoodPayload> getFoods() {
+		return foodRepository.findAll().stream()
+			.map(FoodPayload::new)
+			.collect(Collectors.toList());
 	}
 }

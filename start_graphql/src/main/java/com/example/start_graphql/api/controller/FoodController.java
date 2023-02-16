@@ -2,11 +2,15 @@ package com.example.start_graphql.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.example.start_graphql.api.controller.dto.FoodInput;
+import com.example.start_graphql.api.controller.dto.FoodPayload;
 import com.example.start_graphql.api.domain.Food;
 import com.example.start_graphql.api.service.FoodService;
 
@@ -25,8 +29,8 @@ public class FoodController {
 	 *  graphql은 endpoint과 하나이므로 @MutationMapping 어노테이션만 지정해 주고 다른 설정은 필요 없습니다.
 	 */
 	@MutationMapping
-	public Food save(@Argument String name) {
-		return foodService.save(name);
+	public FoodPayload save(@Argument("input") @Valid FoodInput input) {
+		return foodService.save(input);
 	}
 
 	/**
@@ -34,12 +38,12 @@ public class FoodController {
 	 * 말고도 @SubscriptionMapping이 있습니다.
 	 */
 	@QueryMapping
-	public Food getFood(@Argument String name) {
-		return foodService.getFood(name);
+	public FoodPayload getFood(@Argument FoodInput input) {
+		return foodService.getFood(input);
 	}
 
 	@QueryMapping
-	public List<Food> getFoods() {
+	public List<FoodPayload> getFoods() {
 		return foodService.getFoods();
 	}
 }
